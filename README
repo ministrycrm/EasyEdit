@@ -10,3 +10,19 @@ zone5 (richtext)
 zone6 (richtext)
 
 Included is a modified version of the Clarity Template with the appropriate EasyEdit tags.
+
+WSYWIG editor will need to be downloaded and installed it the assets/components directory.
+
+Note: The elfinder config file needs to be updated.  it is located in
+/assets/components/elfinder/connectors/php/connector.php
+
+Modify the following to make it work with your server configuration:
+lines 31 and 32.
+'root' => /home/YOURSITEFOLDER/public_html/assets/',  // path to root directory
+'URL'  => '/assets/', // root directory URL
+
+Editor
+http://sourceforge.net/projects/elrte/files/
+
+Resource Browser:
+http://sourceforge.net/projects/elfinder/files/
