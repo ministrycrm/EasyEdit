@@ -1,0 +1,10 @@
+<style>
+#zone2{width:70%;float:left; padding-left:10px;}
+#zone1{width:28%;float:left; }
+span.clearFix {width:100%; height:0px; visibility:hidden; clear:both; display:block; margin:0; padding:0; font-size:0px;}
+
+</style>
+
+<div id="zone1">[[!EasyEdit? &zone=`1`]]</div>
+<div id="zone2">[[!EasyEdit? &zone=`2`]]</div>
+<span class="clearFix"></span>

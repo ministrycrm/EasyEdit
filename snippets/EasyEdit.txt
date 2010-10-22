@@ -1,0 +1,219 @@
+$zone = (isset($zone))? $zone : '';
+$url = $modx->makeUrl($modx->getOption('site_start',null,1));
+echo 'Zone: '.$zone;
+if($_GET["editzone"]==$zone){
+?>
+	<script type="text/javascript" charset="utf-8">
+		$().ready(function() {
+				$('#elFinder a').hover(
+					function () {
+						$('#elFinder a').animate({
+							'background-position' : '0 -45px'
+						}, 300);
+					},
+					function () {
+						$('#elFinder a').delay(400).animate({
+							'background-position' : '0 0'
+						}, 300);
+					}
+				);
+			$('#elFinder a').delay(800).animate({'background-position' : '0 0'}, 300);
+			var opts = {
+				cssClass : 'el-rte',
+				lang     : 'en',
+				height   : 420,
+				toolbar  : 'normal',
+				cssfiles : ['assets/components/elrte/css/elrte-inner.css'],
+				fmOpen : function(callback) {
+					$('<div id="myelfinder" />').elfinder({
+						url : 'assets/components/elfinder/connectors/php/connector.php',
+						lang : 'en',
+						dialog : { width : 900, modal : true, title : 'elFinder - file manager for web' },
+						closeOnEditorCallback : true,
+						editorCallback : callback
+					})
+				}
+			}
+			$('#editor').elrte(opts);
+		})
+		</script>
+<?php
+}
+$UserID = $modx->user->get('id');
+if($_SESSION["modx.user.$UserID.attributes"]["web"]["modAccessContext"]["mgr"]["0"]["policy"]["access_permissions"] == "1"){
+	if($_GET["editzone"]==$zone){
+		echo '
+			<style>
+				#content ul {margin:0;}
+				#content ul li {border:1px solid #EEEEEE;color:#444444;padding:0;}
+				.button{border:1px solid #CCCCCC;font-size:13px;padding:5px;}
+			</style>
+		';
+$resourceId = $modx->resource->get('id');
+$siteStart = (int)$modx->getOption('site_start');
+if($resourceId == $siteStart){
+$urlaction = $modx->makeUrl($resourceId);
+}else{
+$urlaction = $modx->resource->get('alias');
+};		
+		echo '
+			<form name="zone'.$zone.'" action="'.$urlaction.'" method="post">
+			<div id="adminpanel">
+				<input class="button" type="submit" value="Save" /><a href="'.$modx->getOption('site_url').''.$modx->resource->get('alias').'?editmode=off"><button>Exit Edit Mode</button></a>
+			</div>
+			<input type="hidden" name="zone'.$zone.'" value="save" />';
+			
+		switch ($zone) {
+			case 1:
+				echo '<textarea rows="15" class="textarea" name="content" id="editor">'.$modx->resource->get('content').'</textarea>';
+				break;
+			case 2:
+				$id = $modx->resource->get('id');
+				$tvedit = $modx->getObject('modTemplateVar',array('name'=>'zone2'));
+				$tv = $tvedit->renderOutput($id);
+				echo '<textarea rows="15" class="textarea" name="content" id="editor">'.$tv.'</textarea>';
+				break;
+			case 3:
+				$id = $modx->resource->get('id');
+				$tvedit = $modx->getObject('modTemplateVar',array('name'=>'zone3'));
+				$tv = $tvedit->renderOutput($id);
+				echo '<textarea rows="15" class="textarea" name="content" id="editor">'.$tv.'</textarea>';
+				break;
+			case 4:
+				$id = $modx->resource->get('id');
+				$tvedit = $modx->getObject('modTemplateVar',array('name'=>'zone4'));
+				$tv = $tvedit->renderOutput($id);
+				echo '<textarea rows="15" class="textarea" name="content" id="editor">'.$tv.'</textarea>';
+				break;
+			case 5:
+				$id = $modx->resource->get('id');
+				$tvedit = $modx->getObject('modTemplateVar',array('name'=>'zone5'));
+				$tv = $tvedit->renderOutput($id);
+				echo '<textarea rows="15" class="textarea" name="content" id="editor">'.$tv.'</textarea>';
+				break;
+			case 6:
+				$id = $modx->resource->get('id');
+				$tvedit = $modx->getObject('modTemplateVar',array('name'=>'zone6'));
+				$tv = $tvedit->renderOutput($id);
+				echo '<textarea rows="15" class="textarea" name="content" id="editor">'.$tv.'</textarea>';
+				break;
+		}		
+		echo '
+			</form>
+		';
+		}else{
+		echo '
+			<div id="adminpanel">
+				<div id="editmode">
+					<a href="[[~[[*id]]? &editzone=`'.$zone.'`]]"><button>Edit This Resource</button></a>
+				</div>
+			</div>
+		';
+		
+			switch ($zone) {
+				case 1:
+					if($_POST["zone1"]=="save"){
+						echo $_POST["content"];
+					}else{
+						echo $modx->resource->get('content');
+					}
+					break;
+				case 2:
+					if($_POST["zone2"]=="save"){
+						echo $_POST["content"];
+					}else{
+					$id = $modx->resource->get('id');
+					$tvedit = $modx->getObject('modTemplateVar',array('name'=>'zone2'));
+					$tv = $tvedit->renderOutput($id);
+					echo $tv;
+					}
+					break;
+				case 3:
+					if($_POST["zone3"]=="save"){
+						echo $_POST["content"];
+					}else{
+					$id = $modx->resource->get('id');
+					$tvedit = $modx->getObject('modTemplateVar',array('name'=>'zone3'));
+					$tv = $tvedit->renderOutput($id);
+					echo $tv;
+					}
+					break;
+				case 4:
+					if($_POST["zone4"]=="save"){
+						echo $_POST["content"];
+					}else{
+					$id = $modx->resource->get('id');
+					$tvedit = $modx->getObject('modTemplateVar',array('name'=>'zone4'));
+					$tv = $tvedit->renderOutput($id);
+					echo $tv;
+					}
+					break;
+				case 5:
+					if($_POST["zone5"]=="save"){
+						echo $_POST["content"];
+					}else{
+					$id = $modx->resource->get('id');
+					$tvedit = $modx->getObject('modTemplateVar',array('name'=>'zone5'));
+					$tv = $tvedit->renderOutput($id);
+					echo $tv;
+					}
+					break;
+				case 6:
+					if($_POST["zone6"]=="save"){
+						echo $_POST["content"];
+					}else{
+					$id = $modx->resource->get('id');
+					$tvedit = $modx->getObject('modTemplateVar',array('name'=>'zone6'));
+					$tv = $tvedit->renderOutput($id);
+					echo $tv;
+					}
+					break;
+			}
+	}
+}else{
+	echo '<h2>'.$modx->resource->get('longtitle').'</h2>';
+	echo $modx->resource->get('content');
+}
+//This is where we save the changes
+if($_POST["zone1"]=="save"){
+	$content = $_POST["content"];
+	$modx->resource->setContent($content);
+	$modx->resource->save();
+	echo 'saved';
+}
+
+if($_POST["zone2"]=="save"){
+	$id = $modx->resource->get('id');
+	$tvedit = $modx->getObject('modTemplateVar',array('name'=>'zone2'));
+	$tvcontent = $_POST["content"];
+	$tvedit->setValue($id,$tvcontent);
+	$tvedit->save();
+}
+if($_POST["zone3"]=="save"){
+	$id = $modx->resource->get('id');
+	$tvedit = $modx->getObject('modTemplateVar',array('name'=>'zone3'));
+	$tvcontent = $_POST["content"];
+	$tvedit->setValue($id,$tvcontent);
+	$tvedit->save();
+}
+if($_POST["zone4"]=="save"){
+	$id = $modx->resource->get('id');
+	$tvedit = $modx->getObject('modTemplateVar',array('name'=>'zone4'));
+	$tvcontent = $_POST["content"];
+	$tvedit->setValue($id,$tvcontent);
+	$tvedit->save();
+}
+if($_POST["zone5"]=="save"){
+	$id = $modx->resource->get('id');
+	$tvedit = $modx->getObject('modTemplateVar',array('name'=>'zone5'));
+	$tvcontent = $_POST["content"];
+	$tvedit->setValue($id,$tvcontent);
+	$tvedit->save();
+}
+if($_POST["zone6"]=="save"){
+	$id = $modx->resource->get('id');
+	$tvedit = $modx->getObject('modTemplateVar',array('name'=>'zone6'));
+	$tvcontent = $_POST["content"];
+	$tvedit->setValue($id,$tvcontent);
+	$tvedit->save();
+}

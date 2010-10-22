@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<base href="[[++site_url]]" /
+<title>[[++site_name]] | [[*pagetitle]]</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="assets/templates/claritypack/css/1.css" type="text/css" media="screen,projection" />
+</head>
+ 
+<body>
+<!--Start Manager Toolbar-->
+[[!ee-toolbar]]
+<!--End Manager Toolbar-->
+
+		<div id="header">
+		<img src="assets/templates/claritypack/images/modx-logo-evolution.png" alt="" width="" height="" border="0" />
+				
+		<div id="ajaxmenu">[[Wayfinder? &startId=`0` &level=`2` &outerTpl=`mh.OuterTpl` &innerTpl=`mh.InnerTpl` &rowTpl=`mh.RowTpl` &innerRowTpl=`mh.InnerRowTpl` &firstClass=`first` &parentClass=`hide` &hereClass=``]] </div> 
+
+				
+		</div>
+		
+		<div id="container">
+		<h1>[[!*longtitle]]</h1>
+		<div id="content">
+		<!--Start Layout. This TV calls a layout chunk.-->
+                    [[!*layoutmode]]
+                    
+		<!--End Layout. This TV calls a layout chunk.-->
+		</div>
+		
+	
+		
+		<div id="footer">
+
+<p><a href="http://www.ministrycrm.com">Ministry CRM</a><br />
+
+</div>
+
+</body>
+</html>

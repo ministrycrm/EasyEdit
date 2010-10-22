@@ -1,0 +1,197 @@
+if($_GET['published']=='0'){
+$modx->resource->set('published','0');
+$modx->resource->save();
+$url = $modx->makeUrl($modx->getOption('site_start',null,1));
+$modx->sendRedirect($url);
+}
+$title = $_POST['title'];
+$alias = $_POST['alias'];
+$longtitle = $_POST['longtitle'];
+$menutitle = $_POST['menutitle'];
+$tid = $_POST['tid'];
+$pid = $_POST['pid'];
+$layoutmode = $_POST['layoutmode'];
+
+if($_POST['new']=="Y"){
+$object = $modx->newObject('modResource');
+$object->set('pagetitle', $title);
+$object->set('alias', $alias);
+$object->set('parent',$pid);
+$object->setContent('Edit Me');
+$object->set('longtitle', $longtitle);
+$object->set('published', '1');
+$object->set('menutitle', $menutitle);
+$object->set('template',$tid);
+$object->save();
+$id = $object->get('id');
+$tvedit = $modx->getObject('modTemplateVar',array('name'=>'layoutmode'));
+$tvcontent = $layoutmode;
+$value = '[[$layout'.$tvcontent.']]';
+$tvedit->setValue($id,$value);
+$tvedit->save();
+
+$modx->executeProcessor(array('location' => 'system','action' => 'clearcache',));
+
+$modx->sendRedirect($alias);
+}
+if($_POST['edit']=="Y"){
+$modx->resource->set('pagetitle', $title);
+$modx->resource->set('longtitle', $longtitle);
+$modx->resource->set('alias', $alias);
+$modx->resource->set('menutitle', $menutitle);
+$modx->resource->save();
+
+$id = $modx->resource->get('id');
+$tvedit = $modx->getObject('modTemplateVar',array('name'=>'layoutmode'));
+$tvcontent = $layoutmode;
+$value = '[[$layout'.$tvcontent.']]';
+$tvedit->setValue($id,$value);
+$tvedit->save();
+
+//$modx->sendRedirect($alias);
+}
+?>
+<link rel="stylesheet" href="assets/components/elrte/js/ui-themes/smoothness/jquery-ui-1.8.5.custom.css" type="text/css" media="screen" charset="utf-8" /> 
+<link rel="stylesheet" href="assets/components/elrte/css/elrte.full.css"  type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="assets/components/elfinder/css/elfinder.css" type="text/css" media="screen" charset="utf-8" />
+<script src="assets/components/elrte/js/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/components/elrte/js/jquery-ui-1.8.5.custom.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/components/elrte/js/elrte.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/components/elrte/js/i18n/elrte.en.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/components/elfinder/js/elfinder.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/components/elfinder/js/i18n/elfinder.en.js" type="text/javascript" charset="utf-8"></script>
+<?php
+echo '
+<style>
+#adminpanel {
+background-color:#E2E2E2;
+padding:4px 10px;
+}
+button {
+border:1px solid #CCCCCC;
+font-size:13px;
+padding:5px;
+}
+a.button{
+text-decoration:none;
+margin-left:10px;
+}
+#newpage{padding:10px;}
+#editpage{padding:10px;}
+</style>';
+?>
+<script type="text/javascript">
+	$(document).ready(function() { 
+        $("#btn-newpage").click(function() {
+            $("#newpage").toggle('blind','',400);
+            $("#editpage").hide();
+        });
+        $("#btn-editpage").click(function() {
+            $("#editpage").toggle('blind','',400);
+            $("#newpage").hide();
+        });
+             $("#newpage").hide();
+             $("#editpage").hide();
+	});
+</script>
+<?php
+$UserID = $modx->user->get('id');
+$alias = $modx->resource->get('alias');
+if($_SESSION["modx.user.$UserID.attributes"]["web"]["modAccessContext"]["mgr"]["0"]["policy"]["access_permissions"] == "1"){
+echo '<div id="adminpanel">
+<a href="[[~[[*id]]]]#" class="button" id="btn-newpage"><button>Create New Page</button></a>
+<a href="[[~[[*id]]]]#" class="button" id="btn-editpage"><button>Edit This Page</button></a>
+<a href="[[~[[*id]]? &published=`0`]]" class="button"><button>Unpublish This Page</button></a>
+</div>
+<div id="newpage">
+<form action="[[~[[*id]]]]" method="post">
+<input name="tid" type="hidden" value="[[templatesget]]" />
+<input name="new" type="hidden" value="Y" />
+<input name="pid" type="hidden" value="[[UltimateParent]]" />
+<p>
+<label for="title">Title</label>
+<input id="title" name="title" type="text" />
+</p>
+<p>
+<label for="longtitle">Page Heading</label>
+<input id="longtitle" name="longtitle" type="text" />
+</p>
+<p>
+<label for="label">URL</label>
+<input id="alias" name="alias" type="text" />
+</p>
+<p>
+<label for="menutitle">Menu Title</label>
+<input id="menutitle" name="menutitle" type="text" /><br /><br />
+</p>
+<p>
+<input type="radio" name="layoutmode" value="1" />
+<img src="assets/images/layout5.png" border="0" />
+<input type="radio" name="layoutmode" value="2" />
+<img src="assets/images/layout4.png" border="0" />
+<input type="radio" name="layoutmode" value="3" />
+<img src="assets/images/layout3.png" border="0" />
+<input type="radio" name="layoutmode" value="4" />
+<img src="assets/images/layout1.png" border="0" />
+<input type="radio" name="layoutmode" value="5" />
+<img src="assets/images/layout2.png" border="0" />
+<input type="radio" name="layoutmode" value="6" />
+<img src="assets/images/layout6.png" border="0" />
+<input type="radio" name="layoutmode" value="7" />
+<img src="assets/images/layout7.png" border="0" />
+<input type="radio" name="layoutmode" value="8" />
+<img src="assets/images/layout9.png" border="0" />
+<input type="radio" name="layoutmode" value="9" />
+<img src="assets/images/layout8.png" border="0" />
+<br />
+
+<input type="submit" value="Submit" class="button" />
+</form>
+</div>
+
+<div id="editpage">
+<form action="[[~[[*id]]]]" method="post">
+<input name="edit" type="hidden" value="Y" />
+<p>
+<label for="title">Title</label>
+<input id="title" name="title" type="text" value="'.$modx->resource->get('pagetitle').'" />
+</p>
+<p>
+<label for="longtitle">Page Heading</label>
+<input id="longtitle" name="longtitle" type="text" value="'.$modx->resource->get('longtitle').'" />
+</p>
+<p>
+<label for="label">URL</label>
+<input id="alias" name="alias" type="text" value="'.$modx->resource->get('alias').'" />
+</p>
+<p>
+<label for="menutitle">Menu Title</label>
+<input id="menutitle" name="menutitle" type="text" value="'.$modx->resource->get('menutitle').'" /><br /><br />
+</p>
+<p>
+<input type="radio" name="layoutmode" value="1" />
+<img src="assets/images/layout5.png" border="0" />
+<input type="radio" name="layoutmode" value="2" />
+<img src="assets/images/layout4.png" border="0" />
+<input type="radio" name="layoutmode" value="3" />
+<img src="assets/images/layout3.png" border="0" />
+<input type="radio" name="layoutmode" value="4" />
+<img src="assets/images/layout1.png" border="0" />
+<input type="radio" name="layoutmode" value="5" />
+<img src="assets/images/layout2.png" border="0" />
+<input type="radio" name="layoutmode" value="6" />
+<img src="assets/images/layout6.png" border="0" />
+<input type="radio" name="layoutmode" value="7" />
+<img src="assets/images/layout7.png" border="0" />
+<input type="radio" name="layoutmode" value="8" />
+<img src="assets/images/layout9.png" border="0" />
+<input type="radio" name="layoutmode" value="9" />
+<img src="assets/images/layout8.png" border="0" />
+<br />
+
+<input type="submit" value="Submit" class="button" />
+</form>
+</div>
+
+';
+}

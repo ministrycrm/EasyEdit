@@ -1,0 +1,22 @@
+<style>
+#ee-col1{width:70%;float:left; padding-left:10px;}
+#ee-col2{width:28%;float:left; }
+#zone1{width:100%}
+#zone3{width:32%; float:left}
+#zone4{width:32%; float:left;padding-left:2%;}
+#zone5{width:32%; float:left;padding-left:2%;}
+span.clearFix {width:100%; height:0px; visibility:hidden; clear:both; display:block; margin:0; padding:0; font-size:0px;}
+
+</style>
+<div id="ee-col2">
+  <div id="zone2">[[!EasyEdit? &zone=`2`]]</div>
+</div>
+<div id="ee-col1">
+  <div id="zone1">[[!EasyEdit? &zone=`1`]]</div>
+  <div id="zone3">[[!EasyEdit? &zone=`3`]]</div>
+  <div id="zone4">[[!EasyEdit? &zone=`4`]]</div>
+  <div id="zone5">[[!EasyEdit? &zone=`5`]]</div>
+<span class="clearFix"></span>
+</div>
+
+<span class="clearFix"></span>
